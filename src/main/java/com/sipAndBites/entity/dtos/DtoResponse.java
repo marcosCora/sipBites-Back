@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
-@Data
-@NoArgsConstructor
+
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class DtoResponse {
 
     private String message;
     private HttpStatus statusCode;
-
 }

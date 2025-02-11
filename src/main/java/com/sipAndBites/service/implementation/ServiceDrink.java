@@ -40,6 +40,11 @@ public class ServiceDrink implements IServiceDrink {
     }
 
     @Override
+    public ResponseEntity<?> saveAll(@NonNull List<Drink> drinks) {
+        return ResponseEntity.ok(repository.saveAll(drinks));
+    }
+
+    @Override
     public ResponseEntity<?> save(@NonNull Drink drink) {
         Drink drinkR = new Drink();
         try{

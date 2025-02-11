@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface IServiceMeal {
     public List<Meal> getAllMeals() throws ObjectNotFoundException;
     public Optional<Meal> getById(Long id) throws InvalidDataException;
+    public ResponseEntity<?> saveAll(@NonNull List<Meal> meals);
     public ResponseEntity<?> save(@NonNull Meal meal);
     public ResponseEntity<?> update(@NonNull Meal meal) throws ObjectNotFoundException;
     public ResponseEntity<?> delete(@NonNull Long id) throws ObjectNotFoundException;

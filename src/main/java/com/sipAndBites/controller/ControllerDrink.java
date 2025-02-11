@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/drink")
 public class ControllerDrink {
@@ -24,6 +26,11 @@ public class ControllerDrink {
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) throws InvalidDataException {
         return ResponseEntity.status(HttpStatus.OK).body(service.getById(id));
+    }
+
+    @PostMapping("/save-all")
+    public ResponseEntity<?> saveAll(@RequestBody List<Drink> drinks){
+        return service.saveAll(drinks);
     }
 
     @PostMapping("/save")

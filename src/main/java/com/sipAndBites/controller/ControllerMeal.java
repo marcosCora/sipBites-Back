@@ -1,5 +1,6 @@
 package com.sipAndBites.controller;
 
+import com.sipAndBites.entity.Drink;
 import com.sipAndBites.entity.Meal;
 import com.sipAndBites.exception.errror.InvalidDataException;
 import com.sipAndBites.exception.errror.ObjectNotFoundException;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/meal")
@@ -24,6 +27,11 @@ public class ControllerMeal {
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) throws InvalidDataException {
         return ResponseEntity.status(HttpStatus.OK).body(service.getById(id));
+    }
+
+    @PostMapping("/save-all")
+    public ResponseEntity<?> saveAll(@RequestBody List<Meal> meals){
+        return service.saveAll(meals);
     }
 
     @PostMapping("/save")

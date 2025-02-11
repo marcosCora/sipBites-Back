@@ -41,6 +41,11 @@ public class ServiceMeal implements IServiceMeal {
     }
 
     @Override
+    public ResponseEntity<?> saveAll(@NonNull List<Meal> meals) {
+        return ResponseEntity.ok(repository.saveAll(meals));
+    }
+
+    @Override
     public ResponseEntity<?> save(@NonNull Meal meal){
         Meal mealR = new Meal();
         try{
@@ -63,9 +68,10 @@ public class ServiceMeal implements IServiceMeal {
 
     @Override
     public ResponseEntity<?> delete(@NonNull Long id) throws ObjectNotFoundException{
-        repository.findById(id)
+       repository.findById(id)
                 .orElseThrow(()-> new ObjectNotFoundException("The object to be deleted does not exist"));
-        repository.deleteById(id);
+       repository.deleteById(id);
+
         return ResponseEntity.status(HttpStatus.OK).body(new DtoResponse("deleted object", HttpStatus.OK)) ;
     }
 }
