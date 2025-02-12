@@ -50,4 +50,9 @@ public class ControllerMeal {
         return service.delete(id);
     }
 
+    @DeleteMapping("/delete-all")
+    public ResponseEntity<?> delete() throws ObjectNotFoundException{
+        return service.deleteAll();
+    }
+
 }

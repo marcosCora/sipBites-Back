@@ -73,4 +73,10 @@ public class ServiceDrink implements IServiceDrink {
         repository.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).body(new DtoResponse("deleted object", HttpStatus.OK)) ;
     }
+
+    @Override
+    public ResponseEntity<?> deleteAll() throws ObjectNotFoundException {
+        repository.deleteAll();
+        return ResponseEntity.ok("deleted all");
+    }
 }

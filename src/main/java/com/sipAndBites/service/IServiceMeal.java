@@ -16,4 +16,5 @@ public interface IServiceMeal {
     public ResponseEntity<?> save(@NonNull Meal meal);
     public ResponseEntity<?> update(@NonNull Meal meal) throws ObjectNotFoundException;
     public ResponseEntity<?> delete(@NonNull Long id) throws ObjectNotFoundException;
+    public ResponseEntity<?> deleteAll() throws ObjectNotFoundException;
 }

@@ -29,9 +29,9 @@ public class User {
     @NonNull
     private String password;
     private boolean active;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Drink> drinks;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Meal> meals;
     private List<Long> mealsFavs;
     private List<Long> drinkFavs;

@@ -49,4 +49,9 @@ public class ControllerDrink {
         return service.delete(id);
     }
 
+    @DeleteMapping("/delete-all")
+    public ResponseEntity<?> deleteAll() throws ObjectNotFoundException{
+        return service.deleteAll();
+    }
+
 }

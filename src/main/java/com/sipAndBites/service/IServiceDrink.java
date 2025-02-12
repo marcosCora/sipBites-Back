@@ -16,4 +16,5 @@ public interface IServiceDrink {
     public ResponseEntity<?> save(@NonNull Drink drink);
     public ResponseEntity<?> update(@NonNull Drink drink) throws ObjectNotFoundException;
     public ResponseEntity<?> delete(@NonNull Long id) throws ObjectNotFoundException;
+    public ResponseEntity<?> deleteAll() throws ObjectNotFoundException;
 }

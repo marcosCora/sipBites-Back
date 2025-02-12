@@ -74,4 +74,10 @@ public class ServiceMeal implements IServiceMeal {
 
         return ResponseEntity.status(HttpStatus.OK).body(new DtoResponse("deleted object", HttpStatus.OK)) ;
     }
+
+    @Override
+    public ResponseEntity<?> deleteAll() throws ObjectNotFoundException {
+        repository.deleteAll();
+        return ResponseEntity.ok("Deleted all");
+    }
 }
