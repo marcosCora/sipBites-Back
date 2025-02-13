@@ -1,6 +1,7 @@
 package com.sipAndBites.controller;
 
 import com.sipAndBites.entity.Drink;
+import com.sipAndBites.entity.dtos.DtoDrink;
 import com.sipAndBites.exception.errror.InvalidDataException;
 import com.sipAndBites.exception.errror.ObjectNotFoundException;
 import com.sipAndBites.service.IServiceDrink;
@@ -34,13 +35,13 @@ public class ControllerDrink {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody Drink drink){
+    public ResponseEntity<?> save(@RequestBody DtoDrink drink){
         System.out.println(drink);
         return service.save(drink);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody Drink drink) throws ObjectNotFoundException{
+    public ResponseEntity<?> update(@RequestBody DtoDrink drink) throws ObjectNotFoundException{
         return service.update(drink);
     }
 

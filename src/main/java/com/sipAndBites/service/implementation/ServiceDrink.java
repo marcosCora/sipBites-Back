@@ -1,9 +1,11 @@
 package com.sipAndBites.service.implementation;
 
 import com.sipAndBites.entity.Drink;
+import com.sipAndBites.entity.dtos.DtoDrink;
 import com.sipAndBites.entity.dtos.DtoResponse;
 import com.sipAndBites.exception.errror.InvalidDataException;
 import com.sipAndBites.exception.errror.ObjectNotFoundException;
+import com.sipAndBites.mapper.MapperDrink;
 import com.sipAndBites.repository.IRepositoryDrink;
 import com.sipAndBites.service.IServiceDrink;
 import lombok.NonNull;
@@ -20,6 +22,8 @@ import java.util.Optional;
 public class ServiceDrink implements IServiceDrink {
     @Autowired
     private IRepositoryDrink repository;
+    @Autowired
+    private MapperDrink mapperDrink;
 
     @Override
     public List<Drink> getAllDrinks() throws ObjectNotFoundException {
@@ -45,10 +49,11 @@ public class ServiceDrink implements IServiceDrink {
     }
 
     @Override
-    public ResponseEntity<?> save(@NonNull Drink drink) {
-        Drink drinkR = new Drink();
+    public ResponseEntity<?> save(@NonNull DtoDrink drink) {
+        Drink drinkR = mapperDrink.DtoDrinkToDrink(drink, null);
+
         try{
-            drinkR = repository.save(drink);
+            drinkR = repository.save(drinkR);
         }catch (DataIntegrityViolationException ex){
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new DtoResponse(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE));
         }catch (Exception ex){
@@ -60,7 +65,7 @@ public class ServiceDrink implements IServiceDrink {
     }
 
     @Override
-    public ResponseEntity<?> update(@NonNull Drink drink) throws ObjectNotFoundException {
+    public ResponseEntity<?> update(@NonNull DtoDrink drink) throws ObjectNotFoundException {
         repository.findById(drink.getId())
                 .orElseThrow(()-> new ObjectNotFoundException("The object to be modified does not exist"));
         return this.save(drink);

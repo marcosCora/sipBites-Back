@@ -1,9 +1,11 @@
 package com.sipAndBites.service.implementation;
 
 import com.sipAndBites.entity.Meal;
+import com.sipAndBites.entity.dtos.DtoMeal;
 import com.sipAndBites.entity.dtos.DtoResponse;
 import com.sipAndBites.exception.errror.InvalidDataException;
 import com.sipAndBites.exception.errror.ObjectNotFoundException;
+import com.sipAndBites.mapper.MapperMeal;
 import com.sipAndBites.repository.IRepositoryMeal;
 import com.sipAndBites.service.IServiceMeal;
 import lombok.NonNull;
@@ -21,6 +23,8 @@ public class ServiceMeal implements IServiceMeal {
 
     @Autowired
     private IRepositoryMeal repository;
+    @Autowired
+    private MapperMeal mapperMeal;
 
     @Override
     public List<Meal> getAllMeals()throws ObjectNotFoundException {
@@ -46,10 +50,10 @@ public class ServiceMeal implements IServiceMeal {
     }
 
     @Override
-    public ResponseEntity<?> save(@NonNull Meal meal){
-        Meal mealR = new Meal();
+    public ResponseEntity<?> save(@NonNull DtoMeal meal){
+        Meal mealR = mapperMeal.DtoMealToMeal(meal, null);
         try{
-            mealR = repository.save(meal);
+            mealR = repository.save(mealR);
         }catch (DataIntegrityViolationException ex){
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new DtoResponse(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE));
         }catch (Exception ex){
@@ -60,7 +64,7 @@ public class ServiceMeal implements IServiceMeal {
     }
 
     @Override
-    public ResponseEntity<?> update(@NonNull Meal meal) throws ObjectNotFoundException{
+    public ResponseEntity<?> update(@NonNull DtoMeal meal) throws ObjectNotFoundException{
         repository.findById(meal.getId())
                 .orElseThrow(()-> new ObjectNotFoundException("The object to be modified does not exist"));
         return this.save(meal);

@@ -22,5 +22,4 @@ public class DtoMeal {
     private String strSource;
     private String strImageSource;
     private Long idUser;
-
 }

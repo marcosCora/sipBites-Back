@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.Date;
 import java.util.List;
@@ -18,15 +19,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NonNull
+    @NotNull
     private String firstName;
-    @NonNull
+    @NotNull
     private String LastName;
-    @NonNull
+    @NotNull
     private Date dateOfBirth;
-    @NonNull
+    @NotNull
     private String email;
-    @NonNull
+    @NotNull
     private String password;
     private boolean active;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
