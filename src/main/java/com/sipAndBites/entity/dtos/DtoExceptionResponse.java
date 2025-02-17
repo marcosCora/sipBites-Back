@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class DtoResponse {
+public class DtoExceptionResponse {
 
     private String message;
     private HttpStatus statusCode;

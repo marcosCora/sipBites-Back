@@ -2,7 +2,7 @@ package com.sipAndBites.service.implementation;
 
 import com.sipAndBites.entity.Drink;
 import com.sipAndBites.entity.dtos.DtoDrink;
-import com.sipAndBites.entity.dtos.DtoResponse;
+import com.sipAndBites.entity.dtos.DtoExceptionResponse;
 import com.sipAndBites.exception.errror.InvalidDataException;
 import com.sipAndBites.exception.errror.ObjectNotFoundException;
 import com.sipAndBites.mapper.MapperDrink;
@@ -55,9 +55,9 @@ public class ServiceDrink implements IServiceDrink {
         try{
             drinkR = repository.save(drinkR);
         }catch (DataIntegrityViolationException ex){
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new DtoResponse(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE));
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new DtoExceptionResponse(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE));
         }catch (Exception ex){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DtoResponse(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DtoExceptionResponse(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE));
 
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(drinkR);
@@ -76,7 +76,7 @@ public class ServiceDrink implements IServiceDrink {
         repository.findById(id)
                 .orElseThrow(()-> new ObjectNotFoundException("The object to be deleted does not exist"));
         repository.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(new DtoResponse("deleted object", HttpStatus.OK)) ;
+        return ResponseEntity.status(HttpStatus.OK).body(new DtoExceptionResponse("deleted object", HttpStatus.OK)) ;
     }
 
     @Override

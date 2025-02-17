@@ -2,7 +2,7 @@ package com.sipAndBites.service.implementation;
 
 import com.sipAndBites.entity.Meal;
 import com.sipAndBites.entity.dtos.DtoMeal;
-import com.sipAndBites.entity.dtos.DtoResponse;
+import com.sipAndBites.entity.dtos.DtoExceptionResponse;
 import com.sipAndBites.exception.errror.InvalidDataException;
 import com.sipAndBites.exception.errror.ObjectNotFoundException;
 import com.sipAndBites.mapper.MapperMeal;
@@ -55,9 +55,9 @@ public class ServiceMeal implements IServiceMeal {
         try{
             mealR = repository.save(mealR);
         }catch (DataIntegrityViolationException ex){
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new DtoResponse(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE));
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new DtoExceptionResponse(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE));
         }catch (Exception ex){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DtoResponse(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DtoExceptionResponse(ex.getMessage(), HttpStatus.NOT_ACCEPTABLE));
 
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(mealR);
@@ -76,7 +76,7 @@ public class ServiceMeal implements IServiceMeal {
                 .orElseThrow(()-> new ObjectNotFoundException("The object to be deleted does not exist"));
        repository.deleteById(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new DtoResponse("deleted object", HttpStatus.OK)) ;
+        return ResponseEntity.status(HttpStatus.OK).body(new DtoExceptionResponse("deleted object", HttpStatus.OK)) ;
     }
 
     @Override
