@@ -1,6 +1,7 @@
 package com.sipAndBites.exception;
 
 import com.sipAndBites.entity.dtos.DtoExceptionResponse;
+import com.sipAndBites.exception.errror.CommentsNotFound;
 import com.sipAndBites.exception.errror.InvalidDataException;
 import com.sipAndBites.exception.errror.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,15 @@ public class ResponseEntityException extends ResponseEntityExceptionHandler {
         error.setMessage(ex.getMessage());
         error.setStatusCode(HttpStatus.NOT_ACCEPTABLE);
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(error);
+    }
+
+    @ExceptionHandler(CommentsNotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<DtoExceptionResponse> responseCommentNotFound(CommentsNotFound ex){
+        DtoExceptionResponse error = new DtoExceptionResponse();
+        error.setMessage(ex.getMessage());
+        error.setStatusCode(HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
 }
