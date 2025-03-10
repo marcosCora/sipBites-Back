@@ -1,5 +1,6 @@
 package com.sipAndBites.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sipAndBites.entity.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,8 +37,10 @@ public class User implements UserDetails {
     @NotNull
     private String password;
     private boolean active;
+    @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Drink> drinks;
+    @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Meal> meals;
     private List<Long> mealsFavs;

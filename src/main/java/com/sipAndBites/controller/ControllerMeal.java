@@ -32,12 +32,12 @@ public class ControllerMeal {
     }
 
     @PostMapping("/save-all")
-    public ResponseEntity<?> saveAll(@RequestBody List<Meal> meals){
+    public ResponseEntity<?> saveAll(@RequestBody List<DtoMeal> meals) throws ObjectNotFoundException{
         return service.saveAll(meals);
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody DtoMeal meal){
+    public ResponseEntity<?> save(@RequestBody DtoMeal meal) throws ObjectNotFoundException{
         System.out.println("holaa " + meal);
         return service.save(meal);
     }

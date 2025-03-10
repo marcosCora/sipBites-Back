@@ -1,13 +1,18 @@
 package com.sipAndBites.service.implementation;
 
+import com.sipAndBites.entity.Drink;
 import com.sipAndBites.entity.Meal;
+import com.sipAndBites.entity.User;
+import com.sipAndBites.entity.dtos.DtoDrink;
 import com.sipAndBites.entity.dtos.DtoMeal;
 import com.sipAndBites.entity.dtos.DtoExceptionResponse;
 import com.sipAndBites.exception.errror.InvalidDataException;
 import com.sipAndBites.exception.errror.ObjectNotFoundException;
 import com.sipAndBites.mapper.MapperMeal;
 import com.sipAndBites.repository.IRepositoryMeal;
+import com.sipAndBites.repository.IRepositoryUser;
 import com.sipAndBites.service.IServiceMeal;
+import com.sipAndBites.service.IServiceUser;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +31,8 @@ public class ServiceMeal implements IServiceMeal {
     private IRepositoryMeal repository;
     @Autowired
     private MapperMeal mapperMeal;
+    @Autowired
+    private IServiceUser serviceUser;
 
     @Override
     public List<Meal> getAllMeals()throws ObjectNotFoundException {
@@ -45,13 +53,21 @@ public class ServiceMeal implements IServiceMeal {
     }
 
     @Override
-    public ResponseEntity<?> saveAll(@NonNull List<Meal> meals) {
-        return ResponseEntity.ok(repository.saveAll(meals));
+    public ResponseEntity<?> saveAll(@NonNull List<DtoMeal> dtoMeals)throws ObjectNotFoundException {
+        List<Meal> meals = new ArrayList<Meal>();
+        for(DtoMeal dto : dtoMeals){
+            User user = serviceUser.getUserById(dto.getIdUser());
+            Meal meal = mapperMeal.DtoMealToMeal(dto, user);
+            meals.add(meal);
+        }
+        repository.saveAll(meals);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Todo ok");
     }
 
     @Override
-    public ResponseEntity<?> save(@NonNull DtoMeal meal){
-        Meal mealR = mapperMeal.DtoMealToMeal(meal, null);
+    public ResponseEntity<?> save(@NonNull DtoMeal meal) throws ObjectNotFoundException{
+        User user = serviceUser.getUserById(meal.getIdUser());
+        Meal mealR = mapperMeal.DtoMealToMeal(meal, user);
         try{
             mealR = repository.save(mealR);
         }catch (DataIntegrityViolationException ex){

@@ -1,5 +1,6 @@
 package com.sipAndBites.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,6 +35,7 @@ public class Drink {
     private List<String> strMeasure;
     private String strSource;
     private String strImageSource;
+    @JsonIgnoreProperties("drinks")
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

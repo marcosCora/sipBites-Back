@@ -13,8 +13,8 @@ import java.util.Optional;
 public interface IServiceDrink {
     public List<Drink> getAllDrinks() throws ObjectNotFoundException;
     public Optional<Drink> getById(Long id) throws InvalidDataException;
-    public ResponseEntity<?> saveAll(@NonNull List<Drink> drinks);
-    public ResponseEntity<?> save(@NonNull DtoDrink drink);
+    public ResponseEntity<?> saveAll(@NonNull List<DtoDrink> dtoDrinks) throws ObjectNotFoundException;
+    public ResponseEntity<?> save(@NonNull DtoDrink drink) throws ObjectNotFoundException;
     public ResponseEntity<?> update(@NonNull DtoDrink drink) throws ObjectNotFoundException;
     public ResponseEntity<?> delete(@NonNull Long id) throws ObjectNotFoundException;
     public ResponseEntity<?> deleteAll() throws ObjectNotFoundException;
